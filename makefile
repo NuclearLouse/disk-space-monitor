@@ -1,8 +1,9 @@
+VERSION = 1.0.0
 DATE = $(shell date /t)
 
 .PHONY: build
 build:
-	go build -o ../disk-usage-monitor_bin  disk-usage-monitor.go
+	go build -ldflags "-X main.version=${VERSION}" -o ../disk-usage-monitor_bin  disk-usage-monitor.go
 
 .PHONY: git
 git:
