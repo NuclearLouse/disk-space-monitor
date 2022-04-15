@@ -1,3 +1,5 @@
+-- # git clone https://redits.oculeus.com/asorokin/disk-usage-monitor_bin.git disk-usage-monitor
+
 -- установка при уже существующем logs-manager
 
 psql -d captdb -U postgres
