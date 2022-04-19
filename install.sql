@@ -19,6 +19,6 @@ VALUES ('Benin-SMS', 'Disk Space Usage Monitor', 'sms-disk-usage-all-log', '{sms
 INSERT INTO logs_manager.alert_settings (id_served_app, urgent_if_message_contains, email_to) 
 VALUES ((SELECT id_served_app FROM logs_manager.served_application WHERE service_name='Disk Space Usage Monitor' AND server_name='Benin-SMS'),'{threshold exceeded}','{alert@oculeus.zohodesk.eu}');
 
-UPDATE logs_manager.agent_bit_control SET reload_config=TRUE WHERE server_name='Benin-SMS';
+UPDATE logs_manager.agent_bit_control SET reload_config=TRUE WHERE server_name='Sierra-Leone';
 UPDATE logs_manager.alert_email_control SET reload_config=TRUE;
 

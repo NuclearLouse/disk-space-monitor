@@ -2,6 +2,8 @@ package main
 
 import (
 	"bufio"
+	"bytes"
+	"encoding/json"
 	"flag"
 	"fmt"
 	"log"
@@ -10,8 +12,6 @@ import (
 	"strconv"
 	"strings"
 	"time"
-
-	"github.com/bndr/gotabulate"
 )
 
 var (
@@ -20,7 +20,7 @@ var (
 	vers      = flag.Bool("v", false, "will display the version of the program")
 	version   string
 
-	warn, info *log.Logger
+	warn, info, erro *log.Logger
 )
 
 type diskInfo struct {
@@ -39,6 +39,7 @@ func init() {
 	}
 	warn = log.New(logFile, "[WARNING] ", log.Ldate|log.Ltime|log.Lmsgprefix)
 	info = log.New(logFile, "[ INFO  ] ", log.Ldate|log.Ltime|log.Lmsgprefix)
+	erro = log.New(logFile, "[ ERROR ] ", log.Ldate|log.Ltime|log.Lmsgprefix)
 }
 
 func main() {
@@ -61,7 +62,7 @@ func main() {
 
 		var (
 			i     int
-			infos []*diskInfo
+			infos []diskInfo
 		)
 
 		for scanner.Scan() {
@@ -77,7 +78,7 @@ func main() {
 					newRow = append(newRow, e)
 				}
 
-				infos = append(infos, &diskInfo{newRow[0], newRow[1], newRow[2], newRow[3], newRow[4], newRow[5]})
+				infos = append(infos, diskInfo{newRow[0], newRow[1], newRow[2], newRow[3], newRow[4], newRow[5]})
 			}
 			i++
 		}
@@ -86,9 +87,11 @@ func main() {
 
 		cmd.Wait()
 
-		var rows [][]string
 
-		var used bool
+		var (
+			used bool
+			winfo []diskInfo
+		)
 		for _, i := range infos {
 			useprc, err := strconv.Atoi(strings.TrimSuffix(i.UsePrc, "%"))
 			if err != nil {
@@ -96,23 +99,15 @@ func main() {
 			}
 			if useprc >= *threshold {
 				used = true
-				rows = append(rows, []string{
-					i.Filesystem,
-					i.Size,
-					i.Used,
-					i.Avail,
-					i.UsePrc,
-					cut(i.MountedOn, 30),
-				})
+				winfo = append(winfo, i)
 			}
 		}
-		if used {
-			tab := gotabulate.Create(rows)
-			tab.SetHeaders([]string{"Filesystem", "Size", "Used", "Available", "Use %", "Mounted on"})
-			tab.SetWrapStrings(true)
-			tab.SetAlign("center")
-			warn.Printf("threshold exceeded!\n%s", tab.Render("grid"))
-			fmt.Printf("threshold exceeded!\n%s", tab.Render("grid"))
+		if used {	
+			buf := &bytes.Buffer{}
+			if err := json.NewEncoder(buf).Encode(winfo); err != nil {
+				erro.Println(err)
+			}		
+			warn.Println("threshold exceeded!", buf.String())
 		} else {
 			info.Println("disk space free")
 		}
@@ -122,13 +117,6 @@ func main() {
 
 }
 
-func cut(text string, limit int) string {
-	runes := []rune(text)
-	if len(runes) >= limit {
-		return string(runes[:limit])
-	}
-	return text
-}
 
 func showVersion() {
 	fmt.Println("Version=", version)
