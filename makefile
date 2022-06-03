@@ -3,7 +3,7 @@ DATE = $(shell date /t)
 
 .PHONY: build
 build:
-	go build -ldflags "-X main.version=${VERSION}" -o ../disk-usage-monitor_bin  disk-usage-monitor.go
+	go build -ldflags "-X main.version=${VERSION}" -o ../disk-space-monitor  disk-space-monitor.go
 
 .PHONY: git
 git:

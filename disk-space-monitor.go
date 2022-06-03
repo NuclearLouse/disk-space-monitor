@@ -33,7 +33,7 @@ type diskInfo struct {
 }
 
 func init() {
-	logFile, err := os.OpenFile("disk-usage-monitor.log", os.O_CREATE|os.O_APPEND|os.O_RDWR, 0666)
+	logFile, err := os.OpenFile("disk-space-monitor.log", os.O_CREATE|os.O_APPEND|os.O_RDWR, 0666)
 	if err != nil {
 		log.Fatal(err)
 	}
