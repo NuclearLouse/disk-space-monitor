@@ -4,7 +4,7 @@ check_period     : 1h
 
 logger:
   loglevel: info
-  logfile : logs/disk-space-monitor.log
+  logfile : disk-space-monitor.log
 
   logrotation:
     maxsize   : 1

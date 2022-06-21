@@ -18,7 +18,6 @@ func New(pool *pgxpool.Pool) *Postgres {
 	return &Postgres{pool}
 }
 
-// Server | Filesystem         |   Size  |   Used  |   Available  |   Use %  |   Mounted on | Treshold
 
 func (db *Postgres) UpdateInfo(ctx context.Context, serverName string, info []datastructs.DiskInfo) error {
 	tx, err := db.Begin(ctx)
@@ -62,10 +61,10 @@ func (db *Postgres) SavedDisk(ctx context.Context, serverName string) ([]datastr
 	for rows.Next() {
 		var d datastructs.DiskInfo
 		if err := rows.Scan(
-			&d.Server, //потом не надо
+			&d.Server, 
 			&d.Filesystem,
-			&d.Size, //потом не надо
-			&d.Used, //потом не надо
+			&d.Size, 
+			&d.Used, 
 			&d.Avail,
 			&d.UsePrc,
 			&d.MountedOn,
@@ -115,18 +114,6 @@ func (db *Postgres) CheckRelation(ctx context.Context) error {
 	return nil
 }
 
-/*
-Filesystem            Size  Used Avail Use% Mounted on
-devtmpfs              7.8G     0  7.8G   0% /dev
-tmpfs                 7.8G   16K  7.8G   1% /dev/shm
-tmpfs                 7.8G  770M  7.1G  10% /run
-tmpfs                 7.8G     0  7.8G   0% /sys/fs/cgroup
-/dev/mapper/vg0-root  6.2G  3.4G  2.9G  55% /
-/dev/sda1            1014M  237M  778M  24% /boot
-/dev/sdb1             1.5T   30G  1.4T   3% /data
-tmpfs                 1.6G     0  1.6G   0% /run/user/1000
-tmpfs                 1.6G     0  1.6G   0% /run/user/0
-*/
 
 func (db *Postgres) createTable(ctx context.Context) (err error) {
 	_, err = db.Exec(ctx, `CREATE TABLE disk_monitor.monitoring_disk (

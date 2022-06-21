@@ -118,7 +118,6 @@ func (s *Service) Start(direct bool) {
 				}
 			}
 
-			//TODO: может только тут обрезать длинное имя ?
 			if threshold == 0 {
 				fmt.Printf("Disk chosen: [%s] | Without warnning limit.\n", ans.Disk)
 			} else {
