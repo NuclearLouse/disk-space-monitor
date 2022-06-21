@@ -8,8 +8,8 @@ DATE = $(shell date /t)
 build:
 	go build ${LDFLAGS_DEV} -v ./cmd/disk-space-monitor
 
-.PHONY: build-deploy
-build-deploy:
+.PHONY: deploy
+deploy:
 	go build ${LDFLAGS} -v -o ../disk-space-monitor-new ./cmd/disk-space-monitor
 
 .PHONY: git
