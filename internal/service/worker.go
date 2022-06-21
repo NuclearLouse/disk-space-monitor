@@ -10,7 +10,7 @@ import (
 	"strings"
 	"time"
 
-	"redits.oculeus.com/asorokin/disk-space-monitor-src-new/internal/datastructs"
+	"redits.oculeus.com/asorokin/disk-space-monitor-src/internal/datastructs"
 )
 
 func (s *Service) worker(ctx context.Context) {

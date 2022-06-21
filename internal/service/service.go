@@ -11,8 +11,8 @@ import (
 	"time"
 
 	"redits.oculeus.com/asorokin/connect/postgres"
-	"redits.oculeus.com/asorokin/disk-space-monitor-src-new/internal/database"
-	"redits.oculeus.com/asorokin/disk-space-monitor-src-new/internal/datastructs"
+	"redits.oculeus.com/asorokin/disk-space-monitor-src/internal/database"
+	"redits.oculeus.com/asorokin/disk-space-monitor-src/internal/datastructs"
 	"redits.oculeus.com/asorokin/logging"
 
 	"github.com/AlecAivazis/survey"

@@ -1,7 +1,7 @@
 VERSION=3.0.1
 
-LDFLAGS = -ldflags "-X redits.oculeus.com/asorokin/disk-space-monitor-src-new/internal/service.version=${VERSION} -X redits.oculeus.com/asorokin/disk-space-monitor-src-new/internal/service.configFile=.yaml"
-LDFLAGS_DEV = -ldflags "-X redits.oculeus.com/asorokin/disk-space-monitor-src-new/internal/service.version=${VERSION} -X redits.oculeus.com/asorokin/disk-space-monitor-src-new/internal/service.configFile=dev.yaml"
+LDFLAGS = -ldflags "-X redits.oculeus.com/asorokin/disk-space-monitor-src/internal/service.version=${VERSION} -X redits.oculeus.com/asorokin/disk-space-monitor-src/internal/service.configFile=.yaml"
+LDFLAGS_DEV = -ldflags "-X redits.oculeus.com/asorokin/disk-space-monitor-src/internal/service.version=${VERSION} -X redits.oculeus.com/asorokin/disk-space-monitor-src/internal/service.configFile=dev.yaml"
 DATE = $(shell date /t)
 
 .PHONY: build
@@ -10,7 +10,7 @@ build:
 
 .PHONY: deploy
 deploy:
-	go build ${LDFLAGS} -v -o ../disk-space-monitor-new ./cmd/disk-space-monitor
+	go build ${LDFLAGS} -v -o ../disk-space-monitor ./cmd/disk-space-monitor
 
 .PHONY: git
 git:

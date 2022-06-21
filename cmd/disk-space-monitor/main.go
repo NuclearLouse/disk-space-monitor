@@ -4,7 +4,7 @@ import (
 	"flag"
 	"log"
 
-	"redits.oculeus.com/asorokin/disk-space-monitor-src-new/internal/service"
+	"redits.oculeus.com/asorokin/disk-space-monitor-src/internal/service"
 )
 
 func main() {

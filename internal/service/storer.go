@@ -3,7 +3,7 @@ package service
 import (
 	"context"
 
-	"redits.oculeus.com/asorokin/disk-space-monitor-src-new/internal/datastructs"
+	"redits.oculeus.com/asorokin/disk-space-monitor-src/internal/datastructs"
 )
 
 type storer interface {

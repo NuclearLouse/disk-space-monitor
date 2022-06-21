@@ -7,7 +7,7 @@ import (
 
 	"github.com/jackc/pgx/v4"
 	"github.com/jackc/pgx/v4/pgxpool"
-	"redits.oculeus.com/asorokin/disk-space-monitor-src-new/internal/datastructs"
+	"redits.oculeus.com/asorokin/disk-space-monitor-src/internal/datastructs"
 )
 
 type Postgres struct {
