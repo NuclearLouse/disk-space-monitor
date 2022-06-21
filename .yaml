@@ -1,0 +1,25 @@
+server_name      : Server Name
+default_threshold: 90
+check_period     : 1h
+
+logger:
+  loglevel: info
+  logfile : logs/disk-space-monitor.log
+
+  logrotation:
+    maxsize   : 1
+    maxbackups: 10
+
+  logformatter:
+    timestamp_format: 2006-01-02 15:04:05.000
+    full_path_caller: false
+
+postgres:
+  host          : localhost
+  port          : 5432
+  database      : captdb
+  schema        : disk_monitor
+  user          : postgres
+  password      : postgres
+  sslmode       : disable
+  max_open_conns: 25

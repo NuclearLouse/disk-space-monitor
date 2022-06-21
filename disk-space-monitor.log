@@ -1,14 +1,12 @@
-2022/04/19 09:55:19 [WARNING] threshold exceeded!
-+----------------------------+---------+---------+--------------+----------+---------------+
-|         Filesystem         |   Size  |   Used  |   Available  |   Use %  |   Mounted on  |
-+============================+=========+=========+==============+==========+===============+
-|   /dev/mapper/centos-home  |   3.9T  |   3.6T  |     262G     |    94%   |     /home     |
-+----------------------------+---------+---------+--------------+----------+---------------+
-2022/04/19 10:55:19 [WARNING] threshold exceeded!
-+----------------------------+---------+---------+--------------+----------+---------------+
-|         Filesystem         |   Size  |   Used  |   Available  |   Use %  |   Mounted on  |
-+============================+=========+=========+==============+==========+===============+
-|   /dev/mapper/centos-home  |   3.9T  |   3.6T  |     261G     |    94%   |     /home     |
-+----------------------------+---------+---------+--------------+----------+---------------+
-2022/04/19 09:55:19 [WARNING] threshold exceeded! [{"Filesystem":"/dev/mapper/centos-home","Size":"3.9T","Used":"3.6T","available":"262G","use-procent":"94%","MountedOn":"
-/home"},{"Filesystem":"overlay","Size":"407G","Used":"17G","available":"390G","use-procent":"5%","MountedOn":"/"}]
+2022-06-21 13:15:18.441 (service.go:62 Start) -> [INFO] ***********************SERVICE [0.0.1] START***********************
+2022-06-21 13:15:18.713 (worker.go:18 worker) -> [INFO] [Check Worker] start worker
+2022-06-21 13:15:23.811 (worker.go:49 worker) -> [WARN] threshold exceeded! [{"Filesystem":"C:/Git","Size":"466G","Used":"150G","Avail":"316G","UsePrc":33,"MountedOn":"/","Server":"","Threshold":32,"LastCheck":"2022-06-21T13:15:23.720476+03:00"}]
+
+2022-06-21 13:15:28.910 (worker.go:49 worker) -> [WARN] threshold exceeded! [{"Filesystem":"C:/Git","Size":"466G","Used":"150G","Avail":"316G","UsePrc":33,"MountedOn":"/","Server":"","Threshold":32,"LastCheck":"2022-06-21T13:15:28.8392568+03:00"}]
+
+2022-06-21 13:15:33.993 (worker.go:49 worker) -> [WARN] threshold exceeded! [{"Filesystem":"C:/Git","Size":"466G","Used":"150G","Avail":"316G","UsePrc":33,"MountedOn":"/","Server":"","Threshold":32,"LastCheck":"2022-06-21T13:15:33.9203506+03:00"}]
+
+2022-06-21 13:15:39.071 (worker.go:49 worker) -> [WARN] threshold exceeded! [{"Filesystem":"C:/Git","Size":"466G","Used":"150G","Avail":"316G","UsePrc":33,"MountedOn":"/","Server":"","Threshold":32,"LastCheck":"2022-06-21T13:15:38.9995634+03:00"}]
+
+2022-06-21 13:15:42.549 (service.go:127 Start) -> [INFO] [Service] database connection closed
+2022-06-21 13:15:42.550 (service.go:128 Start) -> [INFO] ***********************SERVICE STOP************************
