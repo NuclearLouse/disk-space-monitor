@@ -19,14 +19,14 @@ func New(pool *pgxpool.Pool) *Postgres {
 }
 
 
-func (db *Postgres) UpdateInfo(ctx context.Context, serverName string, info []datastructs.DiskInfo) error {
+func (db *Postgres) UpdateInfo(ctx context.Context, serverName string, info map[string]datastructs.DiskInfo) error {
 	tx, err := db.Begin(ctx)
 	if err != nil {
 		return err
 	}
 	defer tx.Rollback(ctx)
 	if _, err := tx.Exec(ctx,
-		"DELETE FROM disk_monitor.monitoring_disk WHERE server=$1", serverName); err != nil {
+		"DELETE FROM disk_monitor.monitoring_disk WHERE server_name=$1", serverName); err != nil {
 		return err
 	}
 	for _, i := range info {
@@ -51,7 +51,7 @@ func (db *Postgres) UpdateInfo(ctx context.Context, serverName string, info []da
 
 func (db *Postgres) SavedDisk(ctx context.Context, serverName string) ([]datastructs.DiskInfo, error) {
 	rows, err := db.Query(ctx,
-		"SELECT * FROM disk_monitor.monitoring_disk WHERE server=$1", serverName)
+		"SELECT * FROM disk_monitor.monitoring_disk WHERE server_name=$1", serverName)
 	if err != nil {
 		return nil, err
 	}
@@ -117,7 +117,7 @@ func (db *Postgres) CheckRelation(ctx context.Context) error {
 
 func (db *Postgres) createTable(ctx context.Context) (err error) {
 	_, err = db.Exec(ctx, `CREATE TABLE disk_monitor.monitoring_disk (
-		server varchar NOT NULL,
+		server_name varchar NOT NULL,
 		filesystem varchar NOT NULL,
 		size varchar NOT NULL,
 		used varchar NOT NULL,
@@ -126,7 +126,7 @@ func (db *Postgres) createTable(ctx context.Context) (err error) {
 		mounted_on text NOT NULL,
 		threshold int4 NOT NULL,
 		last_check timestamp NOT NULL DEFAULT now(),
-		CONSTRAINT pk_monitoring_disk PRIMARY KEY (mounted_on) 
+		CONSTRAINT uniq_monitoring_disk UNIQUE (server_name, mounted_on) 
 	)`)
 	return err
 }

@@ -131,12 +131,12 @@ func (s *Service) defaultTreshold(data datastructs.DiskInfo) datastructs.DiskInf
 	}
 }
 
-func (s *Service) compare(current, saved []datastructs.DiskInfo) []datastructs.DiskInfo {
+func (s *Service) compare(current, saved []datastructs.DiskInfo) map[string]datastructs.DiskInfo {
 
-	var diff []datastructs.DiskInfo
+	diff := make(map[string]datastructs.DiskInfo)
 	if len(saved) == 0 {
 		for _, c := range current {
-			diff = append(diff, s.defaultTreshold(c))
+			diff[c.MountedOn] = s.defaultTreshold(c)
 		}
 		return diff
 	}
@@ -146,7 +146,7 @@ func (s *Service) compare(current, saved []datastructs.DiskInfo) []datastructs.D
 		for _, sd := range saved {
 			if c.MountedOn == sd.MountedOn {
 				contain = true
-				diff = append(diff, datastructs.DiskInfo{
+				diff[c.MountedOn] = datastructs.DiskInfo{
 					Filesystem: sd.Filesystem,
 					Size:       sd.Size,
 					Used:       c.Used,
@@ -155,12 +155,12 @@ func (s *Service) compare(current, saved []datastructs.DiskInfo) []datastructs.D
 					MountedOn:  sd.MountedOn,
 					Threshold:  sd.Threshold,
 					LastCheck:  c.LastCheck,
-				})
+				}
 				break
 			}
 		}
 		if !contain {
-			diff = append(diff, s.defaultTreshold(c))
+			diff[c.MountedOn] = s.defaultTreshold(c)
 		}
 	}
 	return diff

@@ -9,5 +9,5 @@ import (
 type storer interface {
 	CheckRelation(ctx context.Context) error
 	SavedDisk(ctx context.Context, serverName string) ([]datastructs.DiskInfo, error)
-	UpdateInfo(ctx context.Context, serverName string, info []datastructs.DiskInfo) error
+	UpdateInfo(ctx context.Context, serverName string, info map[string]datastructs.DiskInfo) error
 }

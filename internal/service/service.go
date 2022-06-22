@@ -81,7 +81,7 @@ func (s *Service) Start(direct bool) {
 		flog.Fatalln("check disk info:", err)
 	}
 	checkTime := time.Now()
-	var forUpdate []datastructs.DiskInfo
+	forUpdate := make(map[string]datastructs.DiskInfo)
 	if !direct {
 		//запуск не прямой
 		fmt.Println("Current disks usage:")
@@ -101,7 +101,7 @@ func (s *Service) Start(direct bool) {
 			if err != nil {
 				flog.Errorln("could not get answers to interactive questions:", err)
 				for _, c := range current {
-					forUpdate = append(forUpdate, s.defaultTreshold(c))
+					forUpdate[c.MountedOn] = s.defaultTreshold(c)
 				}
 				break CHOISE
 			}
@@ -126,9 +126,8 @@ func (s *Service) Start(direct bool) {
 
 			for _, c := range current {
 				mountedOn := strings.Split(strings.TrimSpace(mounted), "Mounted on:")[1]
-				if strings.Contains(c.MountedOn, mountedOn) {
-
-					forUpdate = append(forUpdate, datastructs.DiskInfo{
+				if c.MountedOn == mountedOn {
+					forUpdate[c.MountedOn] = datastructs.DiskInfo{
 						Filesystem: c.Filesystem,
 						Size:       c.Size,
 						Used:       c.Used,
@@ -137,7 +136,7 @@ func (s *Service) Start(direct bool) {
 						MountedOn:  c.MountedOn,
 						Threshold:  threshold,
 						LastCheck:  checkTime,
-					})
+					}
 				}
 			}
 
@@ -165,8 +164,6 @@ func (s *Service) Start(direct bool) {
 		flog.Fatalln("update disk info:", err)
 	}
 
-	fmt.Println("The service starts with the following settings:")
-	viewData(forUpdate)
 	go s.worker(ctx)
 
 	sig := make(chan os.Signal, 1)
@@ -193,7 +190,7 @@ func suggestDisk(toComplete string) []string {
 				j+1,
 				i.Filesystem,
 				i.Size,
-				cut(i.MountedOn, 50),
+				i.MountedOn,
 			))
 	}
 	return mounted
