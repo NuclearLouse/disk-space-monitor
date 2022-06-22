@@ -164,6 +164,9 @@ func (s *Service) Start(direct bool) {
 	if err := s.store.UpdateInfo(ctx, s.cfg.ServerName, forUpdate); err != nil {
 		flog.Fatalln("update disk info:", err)
 	}
+
+	fmt.Println("The service starts with the following settings:")
+	viewData(forUpdate)
 	go s.worker(ctx)
 
 	sig := make(chan os.Signal, 1)
@@ -252,10 +255,11 @@ func viewData(data []datastructs.DiskInfo) {
 			d.Avail,
 			fmt.Sprintf("%d %%", d.UsePrc),
 			cut(d.MountedOn, 50),
+			fmt.Sprintf("%d %%", d.Threshold),
 		})
 	}
 	tab := gotabulate.Create(rows)
-	tab.SetHeaders([]string{"#", "Filesystem", "Size", "Used", "Available", "Use %", "Mounted on"})
+	tab.SetHeaders([]string{"#", "Filesystem", "Size", "Used", "Available", "Use %", "Mounted on", "Threshold %"})
 	tab.SetWrapStrings(true)
 	tab.SetAlign("center")
 	fmt.Println(tab.Render("grid"))
